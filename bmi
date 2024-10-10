@@ -1,0 +1,52 @@
+import tkinter as tk
+from tkinter import messagebox
+
+start = tk.Tk()
+start.title("BMI Calculator")
+start.geometry("600x400")
+start.configure(bg="skyblue")
+
+
+tk.Label(start, text="Weight (kg):").grid(row=0, column=0, padx=10, pady=10)
+weight_entry = tk.Entry(start)
+weight_entry.grid(row=0, column=1, padx=10, pady=10)
+
+tk.Label(start, text="Height (cm):").grid(row=1, column=0, padx=10, pady=10)
+height_entry = tk.Entry(start)
+height_entry.grid(row=1, column=1, padx=10, pady=10)
+
+def calculate_bmi():
+    
+        weight = float(weight_entry.get())
+        height = float(height_entry.get()) / 100  # Convert cm to meters
+        bmi_result = weight / (height ** 2)
+        bmi_result = round(bmi_result, 1)
+        show_bmi_result(bmi_result)
+
+
+def show_bmi_result(bmi_result):
+    if bmi_result < 18.5:
+        result = f"BMI = {bmi_result}. You are underweight."
+    elif 18.5 <= bmi_result < 24.9:
+        result = f"BMI = {bmi_result}. You have a normal weight."
+    elif 25 <= bmi_result < 29.9:
+        result = f"BMI = {bmi_result}. You are overweight."
+    else:
+        result = f"BMI = {bmi_result}. You are obese."
+    messagebox.showinfo("BMI Result", result)
+
+calculate_button = tk.Button(start, text="Calculate BMI", command=calculate_bmi)
+calculate_button.grid(row=2, columnspan=2, pady=20)
+
+def reset():
+    weight_entry.delete(0,tk.END)
+    height_entry.delete(0,tk.END)
+    bmi.set("")
+button_frame = tk.Frame(start, bg='lightblue')
+button_frame.grid(row=3, column=0, columnspan=3, pady=10)
+reset_button = tk.Button(button_frame, text="Reset", command=reset, width=10)
+reset_button.grid(row=4, column=7)
+
+
+# Run the application
+start.mainloop()
